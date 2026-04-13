@@ -22,14 +22,20 @@ export function HexCard({ title, description, imageUrl, tags }: HexCardProps) {
           </>
         )}
         
-        <div className="relative z-10 flex flex-col items-center h-full justify-center">
-          <h3 className="text-xl font-semibold text-slate-800 mb-3">{title}</h3>
-          <p className="text-sm text-slate-600 mb-4 line-clamp-4">{description}</p>
+        <div className="relative z-10 flex flex-col items-center h-full text-center px-4">
+          <h3 className="text-2xl font-light text-slate-900 mb-2 tracking-tight">
+            {title}
+          </h3>
+          <div className="w-10 h-0.5 bg-[var(--color-ice-blue)] mb-6 rounded-full" />
+          
+          <p className="text-sm text-slate-600 leading-relaxed mb-6 font-light">
+            {description}
+          </p>
           
           {tags && tags.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2 mt-auto">
+            <div className="flex flex-wrap justify-center gap-2 mt-auto pb-4">
               {tags.map((tag, i) => (
-                <span key={i} className="text-xs px-2 py-1 bg-[var(--color-ice-light)] text-slate-700 rounded-full">
+                <span key={i} className="text-[10px] uppercase tracking-widest px-3 py-1 bg-slate-50 border border-slate-100 text-slate-500 rounded-md">
                   {tag}
                 </span>
               ))}

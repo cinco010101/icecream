@@ -47,3 +47,10 @@ body {
 .hex-shadow {
   filter: drop-shadow(0 4px 6px rgba(160, 196, 255, 0.4));
 }
+
+.glow-fluorescent {
+  filter: drop-shadow(0 0 10px rgba(160, 196, 255, 0.8)) drop-shadow(0 0 20px rgba(160, 196, 255, 0.4));
+  border: 2px solid var(--color-ice-blue);
+  box-shadow: inset 0 0 15px rgba(160, 196, 255, 0.3);
+}
+

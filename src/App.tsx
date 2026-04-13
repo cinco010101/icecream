@@ -25,7 +25,7 @@ export default function App() {
   return (
     <div className="min-h-screen relative flex flex-col font-sans">
       <Snowflakes />
-      
+
       {/* Navigation */}
       <nav className="relative z-20 w-full p-6 pt-8 flex justify-center gap-2 sm:gap-4 flex-wrap">
         <HexButton active={currentScreen === 'home'} onClick={() => setCurrentScreen('home')}>Home</HexButton>
@@ -57,16 +57,30 @@ export default function App() {
 function Home() {
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="hex-shadow mb-10">
-        <div className="hex-card w-48 h-56 bg-[var(--color-ice-light)] flex items-center justify-center">
-          <span className="text-6xl" role="img" aria-label="snowflake">❄️</span>
+      <motion.div
+        animate={{ y: [0, -15, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="relative mb-16"
+      >
+        {/* Soft Color Blur (Aura) */}
+        <div className="absolute inset-0 bg-[var(--color-ice-blue)] opacity-20 blur-[80px] rounded-full scale-150 -z-10 animate-pulse"></div>
+
+        {/* Elegant Hexagon Container */}
+        <div className="hex-shadow">
+          <div className="hex-card w-64 h-72 bg-white/10 backdrop-blur-sm shadow-inner flex items-center justify-center overflow-hidden">
+            <img
+              src="/assets/mountain.png"
+              alt="Winter Mountain"
+              className="w-full h-full object-cover scale-110"
+            />
+          </div>
         </div>
-      </div>
+      </motion.div>
       <h1 className="text-5xl md:text-7xl font-light text-slate-800 mb-6 tracking-tight">
         Winter <span className="text-[var(--color-ice-blue)] font-medium">Design</span>
       </h1>
       <p className="text-xl text-slate-500 max-w-2xl font-light leading-relaxed">
-        A minimalist, elegant portfolio inspired by the calm and clarity of winter.
+        inspired by the calm and clarity of winter.
       </p>
     </div>
   );
@@ -76,28 +90,60 @@ function About() {
   return (
     <div className="flex flex-col md:flex-row items-center gap-16">
       <div className="flex-1 text-center md:text-left">
-        <h2 className="text-4xl font-light text-slate-800 mb-8">About Me</h2>
+        <h2 className="text-4xl font-light text-slate-800 mb-8">Jhonn Condori</h2>
         <p className="text-lg text-slate-600 mb-6 leading-relaxed">
           I'm a UI/UX developer who believes in clean, purposeful design. Much like a winter landscape, I strive to remove the unnecessary and highlight the essential.
         </p>
         <p className="text-lg text-slate-600 leading-relaxed">
-          My approach combines technical precision with aesthetic elegance, creating digital experiences that are both beautiful and highly functional.
+          One of my goals is to expand my technical and cognitive skills.
         </p>
-      </div>
-      <div className="flex-1 flex justify-center">
-        <div className="grid grid-cols-2 gap-6">
-          {['UI/UX', 'React', 'Tailwind', 'Motion'].map((skill, i) => (
-            <div key={i} className="hex-shadow">
-              <div className="hex-card w-32 h-36 bg-white flex items-center justify-center text-slate-700 font-medium text-lg hover:bg-[var(--color-ice-light)] hover:text-[var(--color-ice-blue)] transition-colors duration-300">
-                {skill}
-              </div>
-            </div>
-          ))}
+
+        {/* Elegant Quote Block */}
+        <div className="mt-10 relative">
+          <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-[var(--color-ice-blue)] to-transparent opacity-50" />
+          <blockquote className="pl-6">
+            <p className="text-xl text-slate-700 font-light italic leading-relaxed">
+              "The color of spring is in the flowers; that of winter, in the imagination"
+            </p>
+            <cite className="block mt-3 text-xs uppercase tracking-[0.2em] text-[var(--color-ice-blue)] font-semibold not-italic">
+              — Terri Guillemets
+            </cite>
+          </blockquote>
         </div>
+      </div>
+      <div className="flex-1 flex flex-col items-center justify-center py-4 scale-75 sm:scale-100">
+        {/* Strictly alternating rows for perfect honeycomb fit */}
+        {renderHexRow(['', '', '', '', '', ''], "-mt-0")}
+        {renderHexRow(['', '', 'UX', '', ''], "-mt-6")}
+        {renderHexRow(['', 'Code', 'React', 'Vite', '', ''], "-mt-6")}
+        {renderHexRow(['', 'Types', 'Node', 'Clean', ''], "-mt-6")}
+        {renderHexRow(['', '', 'Style', '', '', ''], "-mt-6")}
+        {renderHexRow(['', '', '', '', ''], "-mt-6")}
       </div>
     </div>
   );
 }
+
+// Helper to render rows of the honeycomb
+function renderHexRow(items: string[], marginTop: string) {
+  return (
+    <div className={`flex justify-center gap-1 ${marginTop}`}>
+      {items.map((skill, i) => (
+        <div key={i} className={`hex-shadow ${skill === '' ? 'opacity-20' : 'opacity-100'}`}>
+          <div className={`hex-card w-20 h-24 bg-white flex items-center justify-center transition-all duration-300 ${skill !== '' ? 'hover:bg-[var(--color-ice-light)]' : ''}`}>
+            {skill !== '' && (
+              <span className="text-[10px] uppercase tracking-widest font-bold text-slate-600">
+                {skill}
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
 
 function Projects() {
   const projects = [
@@ -125,24 +171,24 @@ function Contact() {
       <p className="text-lg text-slate-600 mb-12">
         Interested in collaborating? Let's build something beautiful together.
       </p>
-      
+
       <form className="w-full flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
-        <input 
-          type="text" 
-          placeholder="Your Name" 
+        <input
+          type="text"
+          placeholder="Your Name"
           className="w-full px-6 py-4 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-[var(--color-ice-blue)] focus:ring-2 focus:ring-[var(--color-ice-light)] transition-all"
         />
-        <input 
-          type="email" 
-          placeholder="Your Email" 
+        <input
+          type="email"
+          placeholder="Your Email"
           className="w-full px-6 py-4 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-[var(--color-ice-blue)] focus:ring-2 focus:ring-[var(--color-ice-light)] transition-all"
         />
-        <textarea 
-          placeholder="Your Message" 
+        <textarea
+          placeholder="Your Message"
           rows={5}
           className="w-full px-6 py-4 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-[var(--color-ice-blue)] focus:ring-2 focus:ring-[var(--color-ice-light)] transition-all resize-none"
         ></textarea>
-        
+
         <div className="mt-6 flex justify-center">
           <HexButton type="submit" className="w-48">Send Message</HexButton>
         </div>
